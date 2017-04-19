@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width">
+		<title>Service worker demo</title>
+		<link rel="stylesheet" href="style.css">
+
+		<link rel="manifest" href="/manifest.json">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="StarWars PWA">
+		<link rel="apple-touch-icon" href="icons/icon-152x152.png">
+		<meta name="msapplication-TileImage" content="icons/icon-144x144.png">
+		<meta name="msapplication-TileColor" content="#4267b2">
+
+	</head>
+
+	<body>
+		<header class="header">
+			<div class="header__container">
+				<h1 class="header__title">Mobile app</h1>
+				<div class="header__menu">
+					<a href="#" class="header__dots">
+						<div class="header__dot"></div>
+						<div class="header__dot"></div>
+						<div class="header__dot"></div>
+
+					</a>
+				</div>
+			</div>
+		</header>
+		<section class="content">
+			<div class="content__wrap">
+				<div class="content__post" id="random"></div>
+			</div>
+			  
+		</section>
+		
+	<script src="app.js"></script>
+	<script src="shake.js"></script>
+	
+	<script>
+		var maxRandomNum;
+		var randomNum;
+	 
+		//Массив ссылок
+		word_array = [
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Farnold%2Fposts%2F10155114916286760%3A0&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fofficialkaigreene%2Fposts%2F10155303124758901%3A0&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkonivjab%2Fposts%2F416261962079193%3A0&width=500" width="450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkonivjab%2Fposts%2F414263138945742%3A0&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fsharikgt%2Fposts%2F1307323726011792&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Falex.mochanov%2Fposts%2F1886524898265286&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Froman.vabishchevych%2Fposts%2F10208417848835994&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fkorchilava.bacho%2Fposts%2F1436379866418258&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fthegooseishere%2Fposts%2F1417595761633820%3A0&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fthegooseishere%2Fposts%2F1414870045239725%3A0&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fthegooseishere%2Fposts%2F1417601274966602%3A0&width=450',
+			'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3D936015443116315%26id%3D214762198574980&width=450',
+			
+		];
+	  	//Номер случайной ссылки поста из массива
+		maxRandomNum = word_array.length - 1;
+		//Ф-ция подставляет ссылку на пост в iframe и передает ее в #result
+		function getPost(){    
+			randomNum = Math.round((Math.random() * (maxRandomNum - 0) + 0));
+			document.getElementById("random").innerHTML = '<iframe src="' + word_array[randomNum] + '" width="auto" height="720" style="border:none;" scrolling="yes" frameborder="0" allowTransparency="false" data-show-text="false"></iframe>';
+		}
+
+		var myShakeEvent = new Shake({
+			threshold: 15,
+			timeout: 1000
+		});
+		myShakeEvent.start();
+		window.addEventListener('shake', shakeEventDidOccur, getPost, false);
+		function shakeEventDidOccur () {
+			getPost();
+			
+			//alert('YEAH, you shake me!');
+		}
+	</script>	
+	</body>
+</html>
